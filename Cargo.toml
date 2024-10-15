@@ -1,0 +1,13 @@
+[package]
+name = "protobuf_testing"
+version = "0.1.0"
+license = "MIT"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5.20", features = ["derive"] }
+prost = "0.13"
+snap = "1.0"
+
+[build-dependencies]
+prost-build = "0.13.3"
