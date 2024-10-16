@@ -1,7 +1,6 @@
 use clap::Parser;
 use prost::Message;
-use protobuf_testing::citadel_gcmessages_common::CMsgMatchMetaDataContents;
-use snap::read::FrameDecoder;
+use protobuf_testing::citadel_gcmessages_common::{CMsgMatchMetaData, CMsgMatchMetaDataContents};
 use std::fs::File;
 use std::io::{self, Read};
 
@@ -21,16 +20,15 @@ fn main() -> std::io::Result<()> {
         read_stdin()
     }?;
 
-    match decompress_snappy_data(&bytes) {
-        Ok(decompressed_data) => {
-            println!("data: {:?}", decompressed_data);
-        }
-        Err(e) => eprintln!("Decompression failed: {}", e),
-    }
-
     match decode_match_metadata_from_bytes(&bytes) {
-        Ok(contents) => {
-            println!("Contents: {:?}", contents);
+        Ok(contents_bytes) => {
+            match decode_match_metadata_contents_from_bytes(contents_bytes.match_details()) {
+                Ok(contents) => {
+                    println!("match meta data contents: \n{:?}", contents)
+                }
+
+                Err(e) => eprintln!("Failed to parse match metadata contents: {}", e),
+            };
         }
         Err(e) => eprintln!("Failed to parse file: {}", e),
     }
@@ -51,15 +49,12 @@ fn read_stdin() -> io::Result<Vec<u8>> {
     Ok(buffer)
 }
 
-fn decode_match_metadata_from_bytes(
+fn decode_match_metadata_from_bytes(bytes: &[u8]) -> Result<CMsgMatchMetaData, prost::DecodeError> {
+    CMsgMatchMetaData::decode(bytes)
+}
+
+fn decode_match_metadata_contents_from_bytes(
     bytes: &[u8],
 ) -> Result<CMsgMatchMetaDataContents, prost::DecodeError> {
     CMsgMatchMetaDataContents::decode(bytes)
-}
-
-fn decompress_snappy_data(compressed_data: &[u8]) -> io::Result<Vec<u8>> {
-    let mut decompressor = FrameDecoder::new(compressed_data);
-    let mut buffer = Vec::new();
-    decompressor.read_to_end(&mut buffer)?;
-    Ok(buffer)
 }

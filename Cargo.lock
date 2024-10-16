@@ -326,7 +326,7 @@ dependencies = [
  "clap",
  "prost",
  "prost-build",
- "snap",
+ "prost-types",
 ]
 
 [[package]]
@@ -379,12 +379,6 @@ dependencies = [
  "linux-raw-sys",
  "windows-sys 0.52.0",
 ]
-
-[[package]]
-name = "snap"
-version = "1.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b6b67fb9a61334225b5b790716f609cd58395f895b3fe8b328786812a40bc3b"
 
 [[package]]
 name = "strsim"

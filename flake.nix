@@ -36,7 +36,6 @@
             rustfmt
             clippy
             protobuf
-            snappy
           ];
         };
       });

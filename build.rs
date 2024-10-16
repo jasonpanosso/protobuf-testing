@@ -4,7 +4,6 @@ fn main() -> Result<()> {
     prost_build::Config::new().compile_protos(
         &[
             "src/proto/google/protobuf/descriptor.proto",
-            "src/proto/deadlock/citadel_gcmessages_server.proto",
             "src/proto/deadlock/citadel_gcmessages_common.proto",
             "src/proto/deadlock/gcsdk_gcmessages.proto",
             "src/proto/deadlock/steammessages.proto",

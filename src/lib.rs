@@ -2,10 +2,6 @@ pub mod citadel_gcmessages_common {
     include!(concat!(env!("OUT_DIR"), "/citadel_gcmessages_common.rs"));
 }
 
-pub mod citadel_gcmessages_server {
-    include!(concat!(env!("OUT_DIR"), "/citadel_gcmessages_server.rs"));
-}
-
 pub mod gcsdk_gcmessages {
     include!(concat!(env!("OUT_DIR"), "/gcsdk_gcmessages.rs"));
 }
